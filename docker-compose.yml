@@ -3,6 +3,8 @@ version: "3"
 services:
   db:
     image: mysql:5.6
+    environment:
+     - MYSQL_HOST=${MYSQL_HOST}
 
   xmr:
     image: xibosignage/xibo-xmr:release-0.7
@@ -10,6 +12,10 @@ services:
   web:
     build:
       context: .
+    links:
+     - "db:${MYSQL_HOST}"
+    environment:
+     - MYSQL_HOST=${MYSQL_HOST}
 
   swagger:
       image: swaggerapi/swagger-ui:latest
