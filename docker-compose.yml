@@ -23,7 +23,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: .docker/dev.Dockerfile
     volumes:
      - ./:/var/www/cms
     ports:
