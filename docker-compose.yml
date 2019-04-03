@@ -7,5 +7,9 @@ services:
   xmr:
     image: xibosignage/xibo-xmr:release-0.7
 
+  web:
+    build:
+      context: .
+
   swagger:
       image: swaggerapi/swagger-ui:latest
