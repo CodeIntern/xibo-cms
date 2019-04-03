@@ -18,7 +18,7 @@ RUN cd / && \
 # Stage 1
 # Build the CMS container
 FROM alpine:3.8
-MAINTAINER Xibo Signage <support@xibosignage.com>
+LABEL maintainer="Xibo Signage <support@xibosignage.com>"
 
 # Install apache, PHP, and supplimentary programs.
 RUN apk update && apk upgrade && apk add tar \
@@ -51,6 +51,7 @@ RUN apk update && apk upgrade && apk add tar \
     apache2 \
     ca-certificates \
     tzdata \
+    shadow \
     && rm -rf /var/cache/apk/*
 
 # Add all necessary config files in one layer
@@ -72,37 +73,16 @@ RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PA
     sed -i "s/session.gc_probability = .*$/session.gc_probability = 1/" /etc/php7/php.ini && \
     sed -i "s/session.gc_divisor = .*$/session.gc_divisor = 100/" /etc/php7/php.ini
 
-# Set some environment variables
-ENV CMS_DEV_MODE=true \
-    XMR_HOST=xmr \
-    MYSQL_HOST=db \
-    MYSQL_PORT=3306 \
-    MYSQL_USER=root \
-    MYSQL_PASSWORD=root \
-    MYSQL_DATABASE=cms \
-    CMS_SERVER_NAME=localhost \
-    CMS_ALIAS=none \
-    CMS_PHP_SESSION_GC_MAXLIFETIME=1440 \
-    CMS_PHP_POST_MAX_SIZE=2G \
-    CMS_PHP_UPLOAD_MAX_FILESIZE=2G \
-    CMS_PHP_MAX_EXECUTION_TIME=300 \
-    CMS_PHP_MEMORY_LIMIT=256M \
-    CMS_APACHE_START_SERVERS=2 \
-    CMS_APACHE_MIN_SPARE_SERVERS=5 \
-    CMS_APACHE_MAX_SPARE_SERVERS=10 \
-    CMS_APACHE_MAX_REQUEST_WORKERS=60 \
-    CMS_APACHE_MAX_CONNECTIONS_PER_CHILD=300
-
 # Expose port 80
 EXPOSE 80
 
 # Map the source files into /var/www/cms
 # Create library and cache, because they might not exist
 # Create /var/www/backup so that we have somewhere for entrypoint to log errors.
-RUN mkdir -p /var/www/cms && \
-    mkdir -p /var/www/cms/library/temp && \
-    mkdir -p /var/www/cms/cache && \
-    mkdir -p /var/www/backup
+# RUN mkdir -p /var/www/cms && \
+#     mkdir -p /var/www/cms/library/temp && \
+#     mkdir -p /var/www/cms/cache && \
+RUN mkdir -p /var/www/backup
 
 # Run entry
 CMD ["/entrypoint.sh"]

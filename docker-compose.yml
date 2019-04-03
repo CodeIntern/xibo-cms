@@ -24,13 +24,12 @@ services:
     build:
       context: .
       dockerfile: .docker/dev.Dockerfile
+    env_file:
+     - .docker/dev.config.env
     volumes:
      - ./:/var/www/cms
     ports:
      - "80:80"
-    environment:
-      CMS_DEV_MODE: "true"
-      MYSQL_DATABASE: "cms"
 
   swagger:
       image: swaggerapi/swagger-ui:latest
