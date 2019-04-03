@@ -3,34 +3,9 @@ version: "3"
 services:
   db:
     image: mysql:5.6
-    ports:
-      - 3315:3306
-    volumes:
-     - ./containers/db:/var/lib/mysql
-    env_file:
-     - .docker/dev.config.env
 
   xmr:
     image: xibosignage/xibo-xmr:release-0.7
-    ports:
-     - "9505:9505"
-    env_file:
-     - .docker/dev.config.env
-
-  web:
-    build:
-      context: .
-      dockerfile: .docker/dev.Dockerfile
-    env_file:
-     - .docker/dev.config.env
-    volumes:
-     - ./:/var/www/cms
-    ports:
-     - "80:80"
 
   swagger:
       image: swaggerapi/swagger-ui:latest
-      ports:
-       - "8080:8080"
-      env_file:
-       - .docker/dev.config.env

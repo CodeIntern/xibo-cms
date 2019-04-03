@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  db:
+    ports:
+      - 3315:3306
+    volumes:
+     - ./containers/db:/var/lib/mysql
+    env_file:
+     - .docker/prod.config.env
+
+  xmr:
+    ports:
+     - "9505:9505"
+    env_file:
+     - .docker/prod.config.env
+
+  web:
+    build:
+      context: .
+      dockerfile: .docker/prod.Dockerfile
+    env_file:
+     - .docker/prod.config.env
+    ports:
+     - "80:80"
+
+  swagger:
+      ports:
+       - "8080:8080"
+      env_file:
+       - .docker/prod.config.env
