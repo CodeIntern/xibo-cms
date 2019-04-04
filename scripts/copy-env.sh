@@ -2,6 +2,7 @@
 
 set -e
 
-echo "Copying env file..."
-
-cp .env.example .env;
+echo "Copying env file if there is none..."
+if [ ! -e .env ]; then
+  cp .env.example .env;
+fi
