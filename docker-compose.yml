@@ -16,6 +16,7 @@ services:
      - "db:${MYSQL_HOST}"
     environment:
      - MYSQL_HOST=${MYSQL_HOST}
+     - APACHE_USER_ID=${APACHE_USER_ID}
 
   swagger:
       image: swaggerapi/swagger-ui:latest
