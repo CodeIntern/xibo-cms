@@ -6,5 +6,10 @@
 set -e
 
 echo "Assiging Apache UID..."
-sed -e "s|APACHE_USER_ID=.*|APACHE_USER_ID=$(id -u)|g" .env
+
+currentUid=$(id -u)
+echo "Current UID: ${currentUid}"
+
+sed -i .env -e "s|APACHE_USER_ID=.*|APACHE_USER_ID=$currentUid|g" .env
+
 echo ""
