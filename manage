@@ -1,0 +1,38 @@
+#!/bin/bash
+
+help_env() {
+  echo "------------------------------------------------------------------------"
+  echo "Usage: `basename $0` [-h]"
+  echo "Usage: $0 [option...] -- { init|start|stop|clean }"
+  echo ""
+  echo "   --- MANAGEMENT ---"
+  echo "   -i, --init, init         Initializes the development environment."
+  echo "   -s, --start, start       Starts all configured services."
+  echo "   -p, --stop, stop         Stops all configured services."
+  echo "   -c, --clean, clean       Cleans containers, volumes, images."
+  echo "------------------------------------------------------------------------"
+}
+
+SCRIPT_DIR="./scripts"
+
+OPT=$(echo "$1" | awk '{print tolower($0)}')
+case "$OPT" in
+  -h | --help | help)
+    help_env
+    ;;
+  -i | --init | init)
+    ${SCRIPT_DIR}/init.sh $2; # System initialization
+    ;;
+  -s | --start | start)
+    ${SCRIPT_DIR}/start.sh; # Start all services
+    ;;
+  -p | --stop | stop)
+    ${SCRIPT_DIR}/stop.sh; # Stop all services
+    ;;
+  -c | --clean | clean)
+    ${SCRIPT_DIR}/clean.sh; # Clean everything
+    ;;
+  *)
+    echo "Error: Unknown option: $1" >&2
+    exit 1 ;;
+esac
