@@ -17,6 +17,12 @@ then
   echo "Starting Webserver"
 fi
 
+# Change Apache permissions
+if [ "$CMS_DEV_MODE" == "true" ]
+then
+  usermod -u "$APACHE_USER_ID" apache
+fi
+
 # Sleep for a few seconds to give MySQL time to initialise
 echo "Waiting for MySQL to start - max 300 seconds"
 /usr/local/bin/wait-for-command.sh -q -t 300 -c "nc -z $MYSQL_HOST $MYSQL_PORT"

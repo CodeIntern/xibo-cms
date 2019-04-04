@@ -60,7 +60,7 @@ RUN npm run build
 # Stage 3
 # Build the CMS container
 FROM alpine:3.8
-MAINTAINER Xibo Signage <support@xibosignage.com>
+LABEL maintainer="Xibo Signage <support@xibosignage.com>"
 
 # Install apache, PHP, and supplimentary programs.
 RUN apk update && apk upgrade && apk add tar \
@@ -104,35 +104,6 @@ COPY --from=sendfile /usr/lib/apache2/mod_xsendfile.so /usr/lib/apache2/mod_xsen
 RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php7/php.ini && \
     sed -i "s/session.gc_probability = .*$/session.gc_probability = 1/" /etc/php7/php.ini && \
     sed -i "s/session.gc_divisor = .*$/session.gc_divisor = 100/" /etc/php7/php.ini
-
-# Setup persistent environment variables
-ENV CMS_DEV_MODE=false \
-    XMR_HOST=xmr \
-    CMS_SERVER_NAME=localhost \
-    MYSQL_HOST=mysql \
-    MYSQL_USER=cms \
-    MYSQL_PASSWORD=none \
-    MYSQL_PORT=3306 \
-    MYSQL_DATABASE=cms \
-    CMS_SMTP_SERVER=smtp.gmail.com:587 \
-    CMS_SMTP_USERNAME=none \
-    CMS_SMTP_PASSWORD=none \
-    CMS_SMTP_USE_TLS=YES \
-    CMS_SMTP_USE_STARTTLS=YES \
-    CMS_SMTP_REWRITE_DOMAIN=gmail.com \
-    CMS_SMTP_HOSTNAME=none \
-    CMS_SMTP_FROM_LINE_OVERRIDE=YES \
-    CMS_ALIAS=none \
-    CMS_PHP_SESSION_GC_MAXLIFETIME=1440 \
-    CMS_PHP_POST_MAX_SIZE=2G \
-    CMS_PHP_UPLOAD_MAX_FILESIZE=2G \
-    CMS_PHP_MAX_EXECUTION_TIME=300 \
-    CMS_PHP_MEMORY_LIMIT=256M \
-    CMS_APACHE_START_SERVERS=2 \
-    CMS_APACHE_MIN_SPARE_SERVERS=5 \
-    CMS_APACHE_MAX_SPARE_SERVERS=10 \
-    CMS_APACHE_MAX_REQUEST_WORKERS=60 \
-    CMS_APACHE_MAX_CONNECTIONS_PER_CHILD=300
 
 # Expose port 80
 EXPOSE 80
