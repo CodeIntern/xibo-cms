@@ -22,7 +22,7 @@ git clone https://git.gbhapps.com/lliu/avi-xibo.git xibo-cms
 cd xibo-cms
 ./manage init dev
 ```
-For staging, same but in instead of "./manage init dev":
+For staging, same but instead of "./manage init dev" run:
 
 ```sh
 ./manage init stage
