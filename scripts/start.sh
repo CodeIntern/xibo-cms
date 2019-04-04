@@ -3,4 +3,4 @@
 set -e
 
 echo "Starting up containers...."
-docker-compose start -d;
+docker-compose start;
