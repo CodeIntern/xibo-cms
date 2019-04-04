@@ -26,12 +26,6 @@
       "homepage": "https://github.com/xibosignage/xibo/tree/master/contributors"
     }
   ],
-  "config": {
-      "platform": {
-          "php": "7",
-          "ext-zmq": "1"
-      }
-  },
 	"minimum-stability": "dev",
 	"prefer-stable": true,
   "require": {
